@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "yarn; node app.js",
+    "start": "node app.js",
     "dev": "nodemon app.js"
   },
   "dependencies": {
@@ -17,10 +17,9 @@
     "express-session": "^1.15.5",
     "http": "^0.0.0",
     "moment": "^2.18.1",
+    "morgan": "^1.8.2",
     "path": "^0.12.7",
     "twilio": "^3.6.4"
   },
-  "devDependencies": {
-    "morgan": "^1.8.2"
-  }
+  "devDependencies": {}
 }
