@@ -1,0 +1,26 @@
+{
+  "name": "AppointmentScheduler",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "dependencies": {
+    "async": "^2.5.0",
+    "axios": "^0.16.2",
+    "body-parser": "^1.17.2",
+    "cors": "^2.8.4",
+    "cosmicjs": "^2.4.0",
+    "express": "^4.15.4",
+    "express-session": "^1.15.5",
+    "http": "^0.0.0",
+    "moment": "^2.18.1",
+    "path": "^0.12.7",
+    "twilio": "^3.6.4"
+  },
+  "devDependencies": {
+    "morgan": "^1.8.2"
+  }
+}
