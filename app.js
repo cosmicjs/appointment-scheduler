@@ -14,10 +14,10 @@ const axios = require('axios')
 
 const app = express()
 const env = process.env.NODE_ENV || 'development'
-const twilioSid = 'AC48122216a5380d7ee781368a4f90f807'
-const twilioAuth ='9b60c1d05b08046f128b12d7a4eb823d'
+const twilioSid = config.twilio.sid
+const twilioAuth = config.twilio.auth
 const twilioClient = twilio(twilioSid, twilioAuth)
-const twilioNumber = '+14243756712'
+const twilioNumber = config.twilio.number
 
 app.set('trust proxy', 1)
 app.use(session({
