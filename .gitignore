@@ -1,2 +1,4 @@
 node_modules
 config/development.js
+npm-debug.log
+.DS_Store

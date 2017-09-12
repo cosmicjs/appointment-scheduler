@@ -1,10 +1,10 @@
-# How to Make and Manage Your Appointments  With CosmicJS
+# How to Make and Manage Your Appointments  With Cosmic JS
 
-Your time is valuable but you can't waste a second of it. People need to see you because work needs to get done and there are collaborations to be made. Instead of letting people communicate with you directly to schedule their use of your time - which only wastes it more - we'll use CosmicJS to build an appointment scheduler. That way, the people who need to talk to you only have to once.
+Your time is valuable but you can't waste a second of it. People need to see you because work needs to get done and there are collaborations to be made. Instead of letting people communicate with you directly to schedule their use of your time - which only wastes it more - we'll use Cosmic JS to build an appointment scheduler. That way, the people who need to talk to you only have to once.
 
-CosmicJS is an API-first CMS, meaning it is language independent, database independent, and practically everything-else independent. This is great for a small project like this one because we can extend it quickly with any language or framework in the future and we can define data structures that are only as complex as we need them to be.
+Cosmic JS is an API-first CMS, meaning it is language independent, database independent, and practically everything-else independent. This is great for a small project like this one because we can extend it quickly with any language or framework in the future and we can define data structures that are only as complex as we need them to be.
 
-Our Appointment Scheduler will let users select a day and a one-hour time slot between 9AM and 5PM to meet with us. We'll then integrate our app with Twilio to send them a confirmation text that their appointment has been scheduled. Finally, we'll build a CosmicJS Extension so we can manage the appointments right from within the CosmicJS dashboard.
+Our Appointment Scheduler will let users select a day and a one-hour time slot between 9AM and 5PM to meet with us. We'll then integrate our app with Twilio to send them a confirmation text that their appointment has been scheduled. Finally, we'll build a Cosmic JS Extension so we can manage the appointments right from within the Cosmic JS dashboard.
 
 We'll complete our project in 3 major sections: 
 
@@ -14,9 +14,9 @@ We'll complete our project in 3 major sections:
 
 But, before any of that, we need to get our Cosmic bucket ready to store and serve data.
 
-## Part 0: Setting Up CosmicJS
+## Part 0: Setting Up Cosmic JS
 
-We'll use two types of Objects to store our data: one for appointments and one for site configurations. In CosmicJS, first create the ```Appointments``` object type with the specified metafields. Then, we'll create a ```Configs``` object type with no default metafields and a ```Site``` object in which we'll define object-specific metafields.
+We'll use two types of Objects to store our data: one for appointments and one for site configurations. In Cosmic JS, first create the ```Appointments``` object type with the specified metafields. Then, we'll create a ```Configs``` object type with no default metafields and a ```Site``` object in which we'll define object-specific metafields.
 
 **Appointments**
 
@@ -1415,7 +1415,7 @@ Note: we'll provide all ```process.env``` variables at deployment with Cosmic. C
 
 ### 3. Handle Post Requests
 
-Two things need to happen here. We'll use the official Twilio client to send a text to the user, and we'll use ```axios``` to make a POST request to the CosmicJS API. Before doing both, we'll strip the user-inputted phone number of any non-digits and compute the time from the selected slot. We have:
+Two things need to happen here. We'll use the official Twilio client to send a text to the user, and we'll use ```axios``` to make a POST request to the Cosmic JS API. Before doing both, we'll strip the user-inputted phone number of any non-digits and compute the time from the selected slot. We have:
 
 ```js
 app.post('/api/appointments', (req, res) => {
@@ -1625,7 +1625,7 @@ Before we build an extension to manage our Appointments, we'll bundle the fronte
 
 In the frontend directory, ```appointment-scheduler```, run ```webpack``` to build out into ```dist```. Then move the contents of ```dist``` to the backend's public folder - ```AppointmentScheduler/public```. The ```index.html``` that Webpack builds will then be the ```index.html``` we serve from `/`.
 
-From ```AppointmentScheduler```, commit the app to a new Github repo. Then, create a trial Twilio account and within the CosmicJS dashboard, add the following ```env``` variables from the deploy menu.
+From ```AppointmentScheduler```, commit the app to a new Github repo. Then, create a trial Twilio account and within the Cosmic JS dashboard, add the following ```env``` variables from the deploy menu.
 
 - ```TWILIO_AUTH``` - your Twilio auth key
 - `TWILIO_SID` - your Twilio sid
@@ -1635,7 +1635,7 @@ Now go ahead and deploy and add a few sample appointments that we can use to tes
 
 ## Part 4. Build the Extension
 
-CosmicJS let's you upload SPA's that you can use to access and manipulate your bucket's data right within the CosmicJS dashboard. These are called Extensions and we'll be building one to be able to view a table of all scheduled appointments, as well as providing us with an easy way to delete them.
+Cosmic JS let's you upload SPA's that you can use to access and manipulate your bucket's data right within the Cosmic JS dashboard. These are called Extensions and we'll be building one to be able to view a table of all scheduled appointments, as well as providing us with an easy way to delete them.
 
 Just as with the frontend, we'll be using React with Material UI and the steps here will be similar to Part 1.
 
@@ -1769,7 +1769,7 @@ this.state = {
 
 Our Extension needs to have the following functions to get it working the way we need it to:
 
-- Fetch data from CosmicJS in ```componentWillMount()``` and handle it in a seperate ```handleFetchMethod``` (and it's companion ```handleFetchError()```)
+- Fetch data from Cosmic JS in ```componentWillMount()``` and handle it in a seperate ```handleFetchMethod``` (and it's companion ```handleFetchError()```)
 - Change the state when the filter option is changed with ```handleToobarDropdownChange()```
 - Override default Material UI ```Table``` selections with ```handleRowSelection()```
 - Handle deleting `Appointment` objects with `handleDelete()`
@@ -1803,11 +1803,11 @@ export default class App extends Component {
     }
   
   	handleFetchError(err) {
-        //handle errors fetching data from CosmicJS
+        //handle errors fetching data from Cosmic JS
     }
   
   	handleFetch(response) {
-        //process data fetched from CosmicJS
+        //process data fetched from Cosmic JS
     }
   
   	handleToolbarDropdownChange(val) {
@@ -1821,7 +1821,7 @@ export default class App extends Component {
     }
   
   	handleDelete(selectedRows) {
-        //send a post request to CosmicJS's api to get rid of unwanted appointments
+        //send a post request to Cosmic JS's api to get rid of unwanted appointments
     }
   
   	checkDisableDate(date) {
@@ -2316,7 +2316,7 @@ Then, compress `dist`, upload it to Cosmic, and we're ready to start managing ap
 
 
 
-Using CosmicJS, Twilio, Express, and React, we've built a modular, easy to extend appointment scheduler to both give others easy access to our time while saving more of it for ourselves. The speed at which we're able to get our app deployed and the simplicity of managing our data reinforces that it was an obvious choice to use CosmicJS both for CMS and deployment. Although our appointment scheduler will definitely save us time in the future, it's a sure thing that it can never compete with the time Cosmic will save us on future projects.
+Using Cosmic JS, Twilio, Express, and React, we've built a modular, easy to extend appointment scheduler to both give others easy access to our time while saving more of it for ourselves. The speed at which we're able to get our app deployed and the simplicity of managing our data reinforces that it was an obvious choice to use Cosmic JS both for CMS and deployment. Although our appointment scheduler will definitely save us time in the future, it's a sure thing that it can never compete with the time Cosmic will save us on future projects.
 
 ---
 
