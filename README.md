@@ -12,7 +12,8 @@ This also comes with a [Cosmic JS Extension](https://cosmicjs.com/extensions) so
 ```
 git clone https://github.com/cosmicjs/appointment-scheduler
 ```
-3. Install packages and start the app
+3. Copy the `config/production.js` file into a new `config/development.js` file. Either hard code or add your variables via the start command.
+4. Install packages and start the app
 ```
 npm i
 COSMIC_BUCKET=your-bucket-slug npm start
