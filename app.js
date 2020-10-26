@@ -52,20 +52,24 @@ app.post('/api/appointments', (req, res) => {
     "write_key": config.bucket.write_key,
     "metafields": [
       {
+        "title": "Date",
         "key": "date",
         "type": "text",
         "value": date.format('YYYY-DD-MM')
       },
       {
+        "title": "Slot",
         "key": "slot",
         "type": "text",
         "value": appointment.slot
       },
       {
+        "title": "Email",
         "key": "email",
         "type": "text",
         "value": appointment.email
       },{
+        "title": "Phone",
         "key": "phone",
         "type": "text",
         "value": appointment.phone //which is now stripped of all non-digits
