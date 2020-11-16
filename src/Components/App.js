@@ -36,7 +36,7 @@ export default class App extends Component {
   constructor() {
     super()
     this.state = {
-      loading: true,
+      loading: false, //otherwise loads forever
       navOpen: false,
       confirmationModalOpen: false,
       confirmationTextVisible: false,
