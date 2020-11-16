@@ -154,7 +154,7 @@ export default class App extends Component {
 
   checkDisableDate(day) {
     const dateString = moment(day).format('YYYY-DD-MM')
-    return this.state.schedule[dateString] === true || moment(day).startOf('day').diff(moment().startOf('day')) < 0
+    return this.state.fullDays.includes(dateString);
   }
 
   renderConfirmationString() {
@@ -320,6 +320,7 @@ export default class App extends Component {
                       mode={smallScreen ? 'portrait' : 'landscape'}
                       onChange={(n, date) => this.handleSetAppointmentDate(date)}
                       shouldDisableDate={day => this.checkDisableDate(day)}
+                      minDate={new Date()}
                        />
                   </StepContent>
               </Step>
