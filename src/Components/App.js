@@ -48,9 +48,9 @@ export default class App extends Component {
       smallScreen: window.innerWidth < 768,
       confirmationSnackbarOpen: false,
       schedule: [], //otherwise undefined in renderAppointmentTimes
-      bookedAppointments:[], //to track booked dates and slots
-      bookedDatesObject: {},
-      fullDays: []
+      bookedAppointments:[], //to track booked appointments
+      bookedDatesObject: {}, //tracks dates coupled to their slots
+      fullDays: [] //to track full days
     }
 
     this.handleNavToggle = this.handleNavToggle.bind(this)
