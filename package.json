@@ -9,8 +9,11 @@
     "build": "webpack"
   },
   "dependencies": {
+    "@babel/core": "^7.12.3",
     "async": "^2.5.0",
     "axios": "^0.16.2",
+    "babel-core": "^6.26.3",
+    "babel-polyfill": "^6.26.0",
     "body-parser": "^1.17.2",
     "cors": "^2.8.4",
     "cosmicjs": "^2.4.0",
@@ -22,11 +25,12 @@
     "morgan": "^1.8.2",
     "nodemon": "^2.0.6",
     "path": "^0.12.7",
+    "react-devtools": "^3.6.3",
     "twilio": "^3.6.4"
   },
   "devDependencies": {
-    "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
+    "babel-plugin-transform-regenerator": "^6.26.0",
     "babel-preset-env": "^1.6.0",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-3": "^6.24.1",

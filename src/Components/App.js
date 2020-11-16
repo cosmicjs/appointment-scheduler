@@ -46,7 +46,11 @@ export default class App extends Component {
       validEmail: true,
       validPhone: true,
       smallScreen: window.innerWidth < 768,
-      confirmationSnackbarOpen: false
+      confirmationSnackbarOpen: false,
+      schedule: [], //otherwise undefined in renderAppointmentTimes
+      bookedAppointments:[], //to track booked dates and slots
+      bookedDatesObject: {},
+      fullDays: []
     }
 
     this.handleNavToggle = this.handleNavToggle.bind(this)
@@ -177,12 +181,17 @@ export default class App extends Component {
         const t2 = moment().hour(9).minute(0).add(slot + 1, 'hours')
         const scheduleDisabled = this.state.schedule[appointmentDateString] ? this.state.schedule[moment(this.state.appointmentDate).format('YYYY-DD-MM')][slot] : false
         const meridiemDisabled = this.state.appointmentMeridiem ? t1.format('a') === 'am' : t1.format('a') === 'pm'
+        let slotFilled;   
+        for (let bookedDay in this.state.bookedDatesObject) {
+          let obj = this.state.bookedDatesObject[bookedDay];
+          (bookedDay === appointmentDateString) && (slotFilled = Object.values(obj).map(Number).includes(slot));
+        }
         return <RadioButton
           label={t1.format('h:mm a') + ' - ' + t2.format('h:mm a')}
           key={slot}
           value={slot}
           style={{marginBottom: 15, display: meridiemDisabled ? 'none' : 'inherit'}}
-          disabled={scheduleDisabled || meridiemDisabled}/>
+          disabled={scheduleDisabled || meridiemDisabled || slotFilled}/>
       })
     } else {
       return null
@@ -203,21 +212,36 @@ export default class App extends Component {
     this.setState({ smallScreen: window.innerWidth < 768 })
   }
 
-  componentWillMount() {
-    async.series({
-      configs(callback) {
-        axios.get(HOST + 'api/config').then(res =>
-          callback(null, res.data.data)
-        )
-      },
-      appointments(callback) {
-        axios.get(HOST + 'api/appointments').then(res => {
-          callback(null, res.data.data)
-        })
+  componentDidMount() {
+    const saveResults = async() => {
+      const appointments = await axios.get(HOST + 'api/appointments');
+      const appointmentData = appointments.data.data;
+      this.setState({bookedAppointments: appointmentData});
+
+      //added logic to exclude booked slots and fully booked dates.
+      let bookedDates=[];
+      let bookedDatesObj = {};
+      let bookedSlots = []
+      appointmentData.map(appointment=>{return (!bookedDates.includes(appointment.date)) && (bookedDates.push(appointment.date),bookedSlots.push(appointment.slot))})
+      bookedDates.map(bookedDate => {
+        let newArray=[]
+        appointmentData.map(appointment=>{ return (appointment.date === bookedDate) && newArray.push(appointment.slot)})
+        return bookedDatesObj[bookedDate] = newArray
+      })
+      for (let bookedDay in bookedDatesObj) {
+        let obj = bookedDatesObj[bookedDay];
+        (obj.length === 8) && this.setState({fullDays: [...this.state.fullDays, bookedDay]});
       }
-    }, (err,response) => {
-      err ? this.handleFetchError(err) : this.handleFetch(response)
-    })
+      this.setState({bookedDatesObject: bookedDatesObj});
+      const config = await axios.get(HOST + 'api/config');
+      const configData = config.data.data;      
+      return {appointmentData, configData};
+    }
+
+    saveResults()
+    .then(result => {this.handleFetch(result)})
+    .catch(err=>this.handleFetchError(err));
+
     addEventListener('resize', this.resize)
   }
 
