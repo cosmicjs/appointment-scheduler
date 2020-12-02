@@ -1,5 +1,5 @@
 {
-  "name": "AppointmentScheduler",
+  "name": "appointmentscheduler",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
@@ -14,11 +14,13 @@
     "body-parser": "^1.17.2",
     "cors": "^2.8.4",
     "cosmicjs": "^2.4.0",
+    "dotenv": "^8.2.0",
     "express": "^4.15.4",
     "express-session": "^1.15.5",
     "http": "^0.0.0",
     "moment": "^2.18.1",
     "morgan": "^1.8.2",
+    "nodemon": "^2.0.6",
     "path": "^0.12.7",
     "twilio": "^3.6.4"
   },
