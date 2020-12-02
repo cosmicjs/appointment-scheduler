@@ -61786,7 +61786,7 @@ var App = function (_Component) {
     key: 'checkDisableDate',
     value: function checkDisableDate(day) {
       var dateString = (0, _moment2.default)(day).format('YYYY-DD-MM');
-      return this.state.schedule[dateString] === true || (0, _moment2.default)(day).startOf('day').diff((0, _moment2.default)().startOf('day')) < 0;
+      return this.state.fullDays.includes(dateString);
     }
   }, {
     key: 'renderConfirmationString',
@@ -62130,7 +62130,8 @@ var App = function (_Component) {
                     },
                     shouldDisableDate: function shouldDisableDate(day) {
                       return _this5.checkDisableDate(day);
-                    }
+                    },
+                    minDate: new Date()
                   })
                 )
               ),
