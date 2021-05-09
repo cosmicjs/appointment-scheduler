@@ -28,7 +28,7 @@
     "axios": "^0.16.2",
     "babel-preset-stage-3": "^6.24.1",
     "cosmicjs": "^2.4.0",
-    "lodash": "^4.17.4",
+    "lodash": "^4.17.21",
     "material-ui": "^0.19.0",
     "moment": "^2.18.1",
     "normalize.css": "^7.0.0",
