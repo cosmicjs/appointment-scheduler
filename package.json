@@ -39,7 +39,7 @@
     "file-loader": "^0.11.2",
     "html-webpack-plugin": "^2.30.1",
     "material-ui": "^0.19.1",
-    "node-sass": "^4.5.3",
+    "node-sass": "^7.0.0",
     "normalize.css": "^7.0.0",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
