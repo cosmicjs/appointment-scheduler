@@ -24,7 +24,7 @@
     "webpack-dev-server": "^2.7.1"
   },
   "dependencies": {
-    "async": "^2.5.0",
+    "async": "^3.2.2",
     "axios": "^0.16.2",
     "babel-preset-stage-3": "^6.24.1",
     "cosmicjs": "^2.4.0",
