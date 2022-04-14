@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@babel/core": "^7.12.3",
-    "async": "^2.5.0",
+    "async": "^3.2.2",
     "axios": "^0.16.2",
     "babel-core": "^6.26.3",
     "babel-polyfill": "^6.26.0",
