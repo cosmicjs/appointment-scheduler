@@ -106,7 +106,7 @@ export default class App extends Component {
     }).map(appointment => appointment.slug).forEach(slug =>
       Cosmic.deleteObject(config, { slug, write_key: config.bucket.write_key }, (err, response) => {
         if (err) {
-          console.log(err)
+          console.log('test: '+ err)
           this.setState({ snackbarDisabled: false, snackbarMessage: 'Failed to delete appointments' })
         } else {
           this.setState({ snackbarMessage: 'Loading...', snackbarDisabled: false })

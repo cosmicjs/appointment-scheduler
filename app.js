@@ -30,22 +30,22 @@ app.set('port', process.env.PORT || 3000)
 
 //handle requests for new appointments
 app.post('/api/appointments', (req, res) => {
-  const twilioSid = config.twilio.sid
-  const twilioAuth = config.twilio.auth
-  const twilioClient = twilio(twilioSid, twilioAuth)
-  const twilioNumber = config.twilio.number
+  // const twilioSid = config.twilio.sid
+  // const twilioAuth = config.twilio.auth
+  // // const twilioClient = twilio(twilioSid, twilioAuth)
+  // const twilioNumber = config.twilio.number
   const appointment = req.body
   appointment.phone = appointment.phone.replace(/\D/g,'')
   const date = moment(appointment.date, 'YYYY-DD-MM').startOf('day')
   const time = date.hour(9).add(appointment.slot, 'hours')
   const smsBody = `${appointment.name}, this message is to confirm your appointment at ${time.format('h:mm a')} on ${date.format('dddd MMMM Do[,] YYYY')}.`
-  //send confirmation message to user
-  twilioClient.messages.create({
-    to: '+1' + appointment.phone,
-    from: twilioNumber,
-    body: smsBody
-  }, (err, message) => console.log(message, err))
-  //push to cosmic
+  // send confirmation message to user
+  // twilioClient.messages.create({
+  //   to: '+1' + appointment.phone,
+  //   from: twilioNumber,
+  //   body: smsBody
+  // }, (err, message) => console.log(message, err))
+  // push to cosmic
   const cosmicObject = {
     "title": appointment.name,
     "type_slug": "appointments",
@@ -83,7 +83,8 @@ app.post('/api/appointments', (req, res) => {
 //expose site configs
 app.get('/api/config', (req,res) => {
   Cosmic.getObject(config, { slug: 'site-config' }, (err, response) => {
-    const data = response.object.metadata
+    console.log(response)
+    const data = response.object? response.object.metadata: console.log(response)
     err ? res.status(500).json({ data: 'error' }) : res.json({ data })
   })
 })
