@@ -28,14 +28,39 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(express.static(path.join(__dirname, 'public')))
 app.set('port', process.env.PORT || 3000)
 
+//limit unauthenticated appointment requests to curb SMS toll fraud and flooding
+const appointmentHits = new Map()
+const APPOINTMENT_WINDOW_MS = 60 * 60 * 1000
+const APPOINTMENT_MAX = 5
+function rateLimitAppointments (req, res, next) {
+  const now = Date.now()
+  const ip = req.ip || 'unknown'
+  const recent = (appointmentHits.get(ip) || []).filter(t => now - t < APPOINTMENT_WINDOW_MS)
+  if (recent.length >= APPOINTMENT_MAX) {
+    return res.status(429).json({ data: 'error' })
+  }
+  recent.push(now)
+  appointmentHits.set(ip, recent)
+  next()
+}
+
 //handle requests for new appointments
-app.post('/api/appointments', (req, res) => {
+app.post('/api/appointments', rateLimitAppointments, (req, res) => {
   const twilioSid = config.twilio.sid
   const twilioAuth = config.twilio.auth
   const twilioClient = twilio(twilioSid, twilioAuth)
   const twilioNumber = config.twilio.number
-  const appointment = req.body
+  const appointment = req.body || {}
+  if (typeof appointment.phone !== 'string' || typeof appointment.name !== 'string' || typeof appointment.email !== 'string') {
+    return res.status(400).json({ data: 'error' })
+  }
   appointment.phone = appointment.phone.replace(/\D/g,'')
+  if (appointment.phone.length !== 10) {
+    return res.status(400).json({ data: 'error' })
+  }
+  if (appointment.name.length > 80) {
+    return res.status(400).json({ data: 'error' })
+  }
   const date = moment(appointment.date, 'YYYY-DD-MM').startOf('day')
   const time = date.hour(9).add(appointment.slot, 'hours')
   const smsBody = `${appointment.name}, this message is to confirm your appointment at ${time.format('h:mm a')} on ${date.format('dddd MMMM Do[,] YYYY')}.`
